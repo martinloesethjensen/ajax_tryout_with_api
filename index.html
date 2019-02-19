@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form>
+    <input type="text" id="name-text" value="alice">
+    <button type="button" id="my-calc-btn">Say hello</button>
+</form>
+
+<div id="welcome-div">Welcome!</div>
+
+<form>
+    <input type="text" id="post-to-find" value="af3910a6-429f-4c74-9ad5-dfe1c4aa04f2">
+    <button type="button" id="post-to-find-btn">Find</button>
+</form>
+<h1 id="show-info"></h1>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+    $(document).on('click', "#my-calc-btn", function () {
+        var name = $('#name-text').val();
+        $('#welcome-div').text("Welcome, " + name + "!");
+    });
+    $(document).on('click', "#post-to-find-btn", function () {
+        var idInput = $('#post-to-find').val();
+        $.ajax({
+            url: "https://ghibliapi.herokuapp.com/species",
+            method: "get",
+            data: {
+                id: idInput
+            },
+            success: function (resp) {
+                console.log(resp);
+                var species = resp[0].name;
+                $('#show-info').text("Species: " + species.toLowerCase());
+            },
+            error: function (resp) {
+                console.log("somthing went vaery bad");
+                console.log(resp);
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>
+
